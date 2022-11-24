@@ -37,8 +37,24 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: 'AIzaSyCGrAL-nG9A6t7cZB1-WT9bivr1uXC3udw',
+          authDomain: 'nuxt-lab-6ddf5.firebaseapp.com',
+          databaseURL: 'https://nuxt-lab-6ddf5-default-rtdb.asia-southeast1.firebasedatabase.app',
+          projectId: 'nuxt-lab-6ddf5',
+          storageBucket: 'nuxt-lab-6ddf5.appspot.com',
+          messagingSenderId: '182971965884',
+          appId: '1:182971965884:web:4fe1f66db30079f2a40bb9',
+          measurementId: 'G-WYS1B994XF'
+        },
+        services: {
+          auth: true // Just as example. Can be any other service.
+        }
+      }
+    ]
   ],
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

@@ -80,9 +80,14 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
+          icon: 'mdi-form-select',
+          title: 'form',
+          to: '/form'
+        },
+        {
+          icon: 'mdi-format-list-bulleted',
+          title: 'history',
+          to: '/history'
         }
       ],
       miniVariant: false,

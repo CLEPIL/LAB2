@@ -1,9 +1,9 @@
 <template>
-  <v-container class="comp">
-    <v-row>
+  <v-container>
+    <v-row class="comp">
       <v-col> 送信完了 </v-col>
     </v-row>
-    <v-row>
+    <v-row class="comp">
       <v-col>
         <router-link to="/form">
           別の注文
@@ -20,36 +20,36 @@
 </template>
 
 <script>
+import { getDatabase, ref, child, get } from 'firebase/database'
 export default {
   data () {
     return {
       headers: [
-        { text: '注文日時', value: 'day' },
-        { text: '野菜', value: 'name' },
-        { text: '数量', value: 'age' },
-        { text: '状態', value: 'now' }
+        { text: '注文日時', value: 'date' },
+        { text: '野菜', value: 'yasai' },
+        { text: '数量', value: 'weight' }
       ],
       items: [
-        {
-          day: '11/8',
-          name: 'リーキ',
-          age: 33,
-          now: '未受取'
-        },
-        {
-          day: '11/7',
-          name: '馬鈴薯',
-          age: 42,
-          now: '受取済'
-        },
-        {
-          day: '11/5',
-          name: 'とうもろこし',
-          age: 10,
-          now: '受取済'
-        }
       ]
     }
+  },
+  mounted () {
+    // eslint-disable-next-line no-console
+    const dbRef = ref(getDatabase())
+    get(child(dbRef, 'orders')).then((snapshot) => {
+      if (snapshot.exists()) {
+        // eslint-disable-next-line no-console
+        console.log(snapshot.val())
+        const orders = snapshot.val()
+        Object.keys(orders).forEach(k => this.items.push(orders[k]))
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('No data available')
+      }
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    })
   },
   methods: {
     deleteItem (item) {
