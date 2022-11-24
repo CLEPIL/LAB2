@@ -21,47 +21,38 @@
 </template>
 
 <script>
+import { getDatabase, ref, child, get } from 'firebase/database'
 export default {
   data () {
     return {
       headers: [
-        {
-          text: 'ID',
-          value: 'id'
-        },
-        {
-          text: '野菜',
-          value: 'name'
-        },
-        { text: '数量', value: 'age' },
+        { text: 'ID', value: 'id' },
+        { text: '野菜', value: 'yasai' },
+        { text: '数量', value: 'weight' },
         { text: '受取日時', value: 'date' },
-        {
-          text: '削除',
-          value: 'delete',
-          sortable: false
-        }
+        { text: '', value: 'delete', sortable: false }
       ],
       items: [
-        {
-          id: 1,
-          name: 'リーキ',
-          age: 33,
-          date: '11/11'
-        },
-        {
-          id: 2,
-          name: '馬鈴薯',
-          age: 42,
-          date: '11/12'
-        },
-        {
-          id: 3,
-          name: 'とうもろこし',
-          age: 10,
-          date: '11/13'
-        }
       ]
     }
+  },
+  mounted () {
+    // eslint-disable-next-line no-console
+    const dbRef = ref(getDatabase())
+    get(child(dbRef, 'orders')).then((snapshot) => {
+      if (snapshot.exists()) {
+        // eslint-disable-next-line no-console
+        console.log(snapshot.val())
+        const orders = snapshot.val()
+        Object.keys(orders).forEach(k => this.items.push(orders[k]))
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('No data available')
+      }
+    }).catch((error) => {
+      // eslint-disable-next-line no-console
+      console.error(error)
+    })
   },
   methods: {
     deleteItem (item) {
