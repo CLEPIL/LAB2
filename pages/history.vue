@@ -1,5 +1,5 @@
 <template>
-  <v-container class="form">
+  <v-container>
     <v-row>
       <v-col>注文一覧</v-col>
       <v-col cols="12">
@@ -17,7 +17,8 @@ export default {
         { text: 'ID', value: 'id' },
         { text: '野菜', value: 'yasai' },
         { text: '数量', value: 'weight' },
-        { text: '受取日時', value: 'date' }
+        { text: '受取日時', value: 'date' },
+        { text: '状態', value: 'jt' }
       ],
       items: []
     }

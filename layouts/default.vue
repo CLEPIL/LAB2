@@ -88,6 +88,14 @@ export default {
           icon: 'mdi-format-list-bulleted',
           title: 'history',
           to: '/history'
+        },
+        {
+          title: 'form2',
+          to: '/form2'
+        },
+        {
+          title: 'list',
+          to: '/orderlist'
         }
       ],
       miniVariant: false,

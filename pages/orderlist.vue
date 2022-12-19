@@ -1,11 +1,16 @@
 <template>
-  <v-container class="form">
+  <v-container>
     <v-row>
       <v-col>注文一覧</v-col>
       <v-col cols="12">
         <v-data-table :headers="headers" :items="items">
+          <template #[`item.link`]="{ item }">
+            <v-btn :href="item.link">
+              連絡
+            </v-btn>
+          </template>
           <template #[`item.delete`]="{ item }">
-            <v-btn small color="0" @click="deleteItem(item)">
+            <v-btn small color="0" @click="approvalItem(item)">
               承認
             </v-btn>
           </template>
@@ -30,6 +35,7 @@ export default {
         { text: '野菜', value: 'yasai' },
         { text: '数量', value: 'weight' },
         { text: '受取日時', value: 'date' },
+        { text: '連絡', value: 'link' },
         { text: '', value: 'delete', sortable: false }
       ],
       items: [
@@ -55,9 +61,20 @@ export default {
     })
   },
   methods: {
-    deleteItem (item) {
+    filter (val, search) {
+      return val === search
+    },
+    approvalItem (item) {
       const index = this.items.indexOf(item)
-      confirm('この注文を承認しますか？') && this.items.splice(index, 1)
+      const result = confirm('この注文を承認しますか？')
+      if (result) {
+        // eslint-disable-next-line no-console
+        console.log('OKがクリックされました')
+        this.items.splice(index, 1)
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('キャンセルがクリックされました')
+      }
     }
   }
 }
