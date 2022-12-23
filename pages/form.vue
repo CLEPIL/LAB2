@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-form class="form">
+    <v-form v-model="isValid" class="form">
       <v-row>
         ID<v-text-field v-model="id" />
       </v-row>
@@ -17,7 +17,7 @@
           />
         </v-col>
         <v-col>
-          <v-text-field v-model.number="weight" />
+          <v-text-field v-model.number="weight" :rules="rules" />
         </v-col>
         <v-col>
           <v-menu v-model="menu">
@@ -28,6 +28,7 @@
                 label="ここから選択"
                 readonly
                 clearable
+                :rules="rules"
                 v-on="on"
               />
             </template>
@@ -42,7 +43,14 @@
           </v-btn>
         </v-col> -->
         <v-col>
-          <v-btn link rel="stylesheet" href="/fin" @click="writeOrderdata()">
+          <v-btn
+            :disabled="!isValid || loading"
+            link
+            rel="stylesheet"
+            href="/fin"
+            block
+            @click="writeOrderdata()"
+          >
             送信
           </v-btn>
         </v-col>
@@ -55,6 +63,7 @@ import { getDatabase, ref, push, get, child } from 'firebase/database'
 export default {
   data () {
     return {
+      rules: [v => !!v || ''],
       items: [],
       yasai: null,
       weight: null,
@@ -63,7 +72,8 @@ export default {
       menu: '',
       text: '',
       picker: null,
-      price: '200'
+      price: '200',
+      isValid: null
     }
   },
   mounted () {
